@@ -95,6 +95,10 @@
                             </svg>
                         </div>
                         <div class="info_movie">
+                            <div class="rating_movie">
+                                <span class="star">★</span>
+                                <span class="vote_average">{{ movie.vote_average }}</span>
+                            </div>
                             <mat-chip-set aria-label="Géneros">
                                 @for (genre of getGenreNames(movie.genre_ids); track genre) {
                                     <mat-chip class="mat-chip">

@@ -39,6 +39,7 @@ body {
     // Colors
     --whiteColor: #FFFFFF;
     --redColor: #cc0000;
+    --yellowColor: #ffff00;
 }
 
 
@@ -84,8 +85,21 @@ body {
         }
     }
     .info_movie {
-        margin-top: 15px;
+        margin-top: 6px;
         padding: 0 20px;
+        position: relative;
+        .rating_movie {
+            // position: absolute;
+            display: flex;
+            justify-content: end;
+            gap: 10px;
+            .star {
+                color: var(--yellowColor);
+            }
+            .vote_average {
+                color: var(--whiteColor);
+            }
+        }
         .release_date {
             color: var(--whiteColor);
         }
