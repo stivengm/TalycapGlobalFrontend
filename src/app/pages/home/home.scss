@@ -1,47 +1,54 @@
-.section_weather {
-    background-color: var(--background-card-movie);
-    border-radius: 20px;
-    padding: 10px;
-    .title_weather {
-        color: var(--whiteColor);
-    }
-    .information_weather {
-        display: flex;
-        flex-direction: row;
-        gap: 30px;
-        .information_with_icon {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            .description {
-                color: var(--whiteColor);
-            }
+.section_home {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    .section_weather {
+        background-color: var(--background-card-movie);
+        border-radius: 20px;
+        padding: 10px;
+        .title_weather {
+            color: var(--whiteColor);
         }
-        .more_information_weather {
+        .information_weather {
             display: flex;
-            gap: 40px;
-            .item_weather {
+            flex-direction: row;
+            gap: 30px;
+            .information_with_icon {
                 display: flex;
-                flex-direction: column;
                 align-items: center;
-                .title {
-                    color: var(--whiteColor);
-                    margin: 0;
-                }
+                gap: 10px;
                 .description {
                     color: var(--whiteColor);
-                    font-weight: bold;
+                }
+            }
+            .more_information_weather {
+                display: flex;
+                gap: 40px;
+                .item_weather {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    .title {
+                        color: var(--whiteColor);
+                        margin: 0;
+                    }
+                    .description {
+                        color: var(--whiteColor);
+                        font-weight: bold;
+                    }
                 }
             }
         }
     }
-}
-
-.title_popular_movies {
-    color: var(--whiteColor);
-}
-.section_popular_movies {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
+    
+    .title_popular_movies {
+        color: var(--whiteColor);
+    }
+    .section_popular_movies {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 30px;
+        // justify-content: center;
+        margin-bottom: 20px;
+    }
 }
