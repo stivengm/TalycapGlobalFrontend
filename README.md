@@ -1,59 +1,72 @@
-# TalycapGlobalFrontend
+# Prueba Técnica TalycapGlobalFullStack - Frontend Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 20.0.3.
+Este proyecto ha sido creado usando [Angular CLI](https://github.com/angular/angular-cli) en su versión 20.0.3.
+Se instaló [Angular Material](https://material.angular.dev/) para poder usarse los componentes de esta UI. 
 
-## Development server
 
-To start a local development server, run:
+## Instalación de dependencias
+```bash
+npm i
+```
+
+## Ejecución local
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Una vez finalice se habilita podrá acceder directamente a la url `http://localhost:4200/` para que se pueda revisar, en caso contrario se puede acceder directamente a esta url donde se encuentra desplegado el sitio `http://localhost:4200/`
 
-## Code scaffolding
+## Arquitectura del proyecto
+La arquitectura del proyecto es básica manteniendo la División de responsabilidades.
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+```mermaid
 
-```bash
-ng generate component component-name
+graph LR;
+
+A[App]
+C[Core]
+I[Interceptors]
+M[Models]
+S[Services]
+
+P[Pages]
+H[Home]
+
+Z[Shared]
+J[Components]
+B[Header]
+L[Loader]
+
+
+A --> C
+A --> P
+A --> Z
+
+
+C --> I
+C --> M
+C --> S
+
+
+P --> H
+
+
+Z --> J
+
+
+J --> B
+J --> L
+
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Services
 
-```bash
-ng generate --help
-```
+- Se consume los servicios de [TheMovieDB](https://www.themoviedb.org/) para obtener películas populares, a este se le hace un filtro por `Nombre`, `Categoría`.
+- Se consume los servicios de [OpenWeatherMap](https://openweathermap.org/) para obtener información sobre los datos del clima, por defecto carga Bogotá y se puede filtrar por el nombre en el buscador
 
-## Building
+## Pantallazos de Pruebas
 
-To build the project run:
+![Consulta de BaseDeDatos con los registros de pruebas](Home.png)
 
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+![Consulta de BaseDeDatos con los registros de pruebas](Paginador.png)
