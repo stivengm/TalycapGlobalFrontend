@@ -102,6 +102,11 @@
                                 </mat-chip>
                             }
                         </mat-chip-set>
+                        @if (movie.release_date) {
+                            <p class="release_date">
+                                {{ movie.release_date | date:'dd/MM/yyyy' }}
+                            </p>
+                        }
                         <h2 class="title_movie">{{ movie.title }}</h2>
                         <p class="description_movie">{{ movie.overview }}</p>
                     </div>

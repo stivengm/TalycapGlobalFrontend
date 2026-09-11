@@ -11,6 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-home',
@@ -21,7 +22,8 @@ import { FormControl, ReactiveFormsModule } from '@angular/forms';
     MatChipsModule,
     MatPaginatorModule,
     DatePipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatSnackBarModule
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
@@ -41,8 +43,18 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private openWeather: OpenWeatherService,
-    private theMovieDBService: TheMovieDBService
+    private theMovieDBService: TheMovieDBService,
+    private snackBar: MatSnackBar
   ) {}
+
+  private showError(message: string): void {
+    this.snackBar.open(message, 'Cerrar', {
+      duration: 5000,
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+      panelClass: ['error-snackbar']
+    });
+  }
 
   ngOnInit(): void {
     this.getPopularMovies()
@@ -63,6 +75,12 @@ export class HomeComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error obteniendo clima:', error);
+
+        if (error.status === 404) {
+          this.showError('No se encontró la ciudad.');
+        } else {
+          this.showError('Error al consultar el clima.');
+        }
       }
     });
   }
@@ -84,7 +102,8 @@ export class HomeComponent implements OnInit {
         this.totalMovies.set(response.total_results);
       },
       error: (error) => {
-        console.error(error);
+        console.error('Error obteniendo películas:', error);
+        this.showError('No se pudieron cargar las películas.');
       }
     });
   }
@@ -117,6 +136,7 @@ export class HomeComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error obteniendo géneros:', error);
+        this.showError('No se pudieron cargar los géneros.');
       }
     });
   }

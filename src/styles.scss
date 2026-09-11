@@ -86,6 +86,9 @@ body {
     .info_movie {
         margin-top: 15px;
         padding: 0 20px;
+        .release_date {
+            color: var(--whiteColor);
+        }
         .title_movie {
             color: var(--whiteColor);
         }
@@ -99,5 +102,17 @@ body {
 }
 input {
     color: var(--whiteColor) !important;
+}
+.error-snackbar {
+  --mdc-snackbar-container-color: #d32f2f;
+  --mdc-snackbar-supporting-text-color: #ffffff;
+}
+
+.error-snackbar .mat-mdc-snack-bar-label {
+  color: #ffffff;
+}
+
+.error-snackbar .mat-mdc-button {
+  color: #ffffff;
 }
 html, body { height: 100%; }
