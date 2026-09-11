@@ -35,6 +35,7 @@ export class HomeComponent implements OnInit {
   genres = signal<GenreModel[]>([]);
   searchQuery = signal('');
   weatherSearchControl = new FormControl('');
+  selectedGenre = signal<number | null>(null);
 
 
   currentPage = signal(1);
@@ -144,7 +145,7 @@ export class HomeComponent implements OnInit {
   onPageChange(event: PageEvent): void {
     const page = event.pageIndex + 1;
     this.pageSize.set(event.pageSize);
-
+    this.currentPage.set(page);
     if (this.searchQuery()) {
       this.theMovieDBService
         .searchMovies(this.searchQuery(), page)
@@ -152,26 +153,64 @@ export class HomeComponent implements OnInit {
           next: (response) => {
             this.popularMovies.set(response.results);
             this.totalMovies.set(response.total_results);
-
           },
-
           error: (error) => {
             console.error(error);
+            this.showError('No se pudieron cargar los resultados.');
           }
         });
 
-    } else {
-
-      this.getPopularMovies(page);
-
+      return;
     }
+
+    if (this.selectedGenre()) {
+
+      this.theMovieDBService
+        .getPopularMovies(page, this.selectedGenre()!)
+        .subscribe({
+          next: (response) => {
+            this.popularMovies.set(response.results);
+            this.totalMovies.set(response.total_results);
+          },
+          error: (error) => {
+            console.error(error);
+            this.showError('No se pudieron cargar las películas.');
+          }
+        });
+      return;
+    }
+    this.getPopularMovies(page);
+  }
+
+  filterByGenre(genreId: number): void {
+    this.selectedGenre.set(genreId);
+    this.searchQuery.set('');
+
+    this.theMovieDBService.getPopularMovies(1, genreId).subscribe({
+      next: (response) => {
+        this.popularMovies.set(response.results);
+        this.totalMovies.set(response.total_results);
+        this.currentPage.set(1);
+      },
+      error: (error) => {
+        console.error('Error filtrando por género:', error);
+        this.showError(
+          'No se pudieron cargar las películas del género.'
+        );
+      }
+    });
   }
 
   getGenreNames(genreIds: number[]): string[] {
     return genreIds
       .map(id => this.genres().find(genre => genre.id === id)?.name)
       .filter((name): name is string => !!name);
+  }
 
+  getGenresByIds(genreIds: number[]): GenreModel[] {
+    return genreIds
+      .map(id => this.genres().find(genre => genre.id === id))
+      .filter((genre): genre is GenreModel => !!genre);
   }
 
   formatterDescriptionWeather(description: string): string {

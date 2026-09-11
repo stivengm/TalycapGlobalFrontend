@@ -100,9 +100,9 @@
                                 <span class="vote_average">{{ movie.vote_average }}</span>
                             </div>
                             <mat-chip-set aria-label="Géneros">
-                                @for (genre of getGenreNames(movie.genre_ids); track genre) {
-                                    <mat-chip class="mat-chip">
-                                        {{ genre }}
+                                @for (genre of getGenresByIds(movie.genre_ids); track genre.id) {
+                                    <mat-chip (click)="filterByGenre(genre.id)">
+                                        {{ genre.name }}
                                     </mat-chip>
                                 }
                             </mat-chip-set>

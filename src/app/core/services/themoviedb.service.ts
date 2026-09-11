@@ -44,13 +44,17 @@ export class TheMovieDBService {
         );
     }
 
-    getPopularMovies(page: number = 1) {
-        const params = new HttpParams()
+    getPopularMovies(page: number = 1, genreId?: number) {
+        let params = new HttpParams()
             .set('include_adult', 'false')
             .set('include_video', 'false')
             .set('language', 'es-ES')
             .set('page', page)
             .set('sort_by', 'popularity.desc');
+
+        if (genreId) {
+            params = params.set('with_genres', genreId);
+        }
 
         return this.httpApp.get<ResponseTheMovieDBModel<MovieModel[]>>(
             `${environment.apiTheMovieDB}/discover/movie`,
