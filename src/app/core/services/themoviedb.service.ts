@@ -28,6 +28,22 @@ export class TheMovieDBService {
         );
     }
 
+    searchMovies(query: string, page: number = 1) {
+        const params = new HttpParams()
+            .set('query', query)
+            .set('language', 'es-ES')
+            .set('page', page)
+            .set('include_adult', 'false');
+
+        return this.httpApp.get<ResponseTheMovieDBModel<MovieModel[]>>(
+            `${environment.apiTheMovieDB}/search/movie`,
+            {
+                params,
+                headers: this.getHeaders()
+            }
+        );
+    }
+
     getPopularMovies(page: number = 1) {
         const params = new HttpParams()
             .set('include_adult', 'false')
@@ -37,11 +53,11 @@ export class TheMovieDBService {
             .set('sort_by', 'popularity.desc');
 
         return this.httpApp.get<ResponseTheMovieDBModel<MovieModel[]>>(
-        `${environment.apiTheMovieDB}/discover/movie`,
-        {
-            params,
-            headers: this.getHeaders()
-        }
+            `${environment.apiTheMovieDB}/discover/movie`,
+            {
+                params,
+                headers: this.getHeaders()
+            }
         );
     }
 
@@ -51,10 +67,10 @@ export class TheMovieDBService {
 
         return this.httpApp.get<GenresModel>(
         `${environment.apiTheMovieDB}/genre/movie/list`,
-        {
-            params,
-            headers: this.getHeaders()
-        }
+            {
+                params,
+                headers: this.getHeaders()
+            }
         );
     }
 

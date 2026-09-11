@@ -6,12 +6,20 @@ import { ResponseOpenWeatherModel } from '../../core/models/response_openWeather
 import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 import { MatChipsModule } from '@angular/material/chips';
 import { GenreModel } from '../../core/models/genres.model';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatChipsModule,
     MatPaginatorModule,
-    MatChipsModule
+    DatePipe
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
@@ -21,6 +29,7 @@ export class HomeComponent implements OnInit {
   weatherInformation = signal<ResponseOpenWeatherModel | null>(null);
   popularMovies = signal<MovieModel[]>([]);
   genres = signal<GenreModel[]>([]);
+  searchQuery = signal('');
 
 
   currentPage = signal(1);
@@ -62,6 +71,27 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  searchMovies(query: string): void {
+    query = query.trim();
+
+    if (!query) {
+      this.getPopularMovies(1);
+      return;
+    }
+
+    this.searchQuery.set(query);
+
+    this.theMovieDBService.searchMovies(query, 1).subscribe({
+      next: (response) => {
+        this.popularMovies.set(response.results);
+        this.totalMovies.set(response.total_results);
+      },
+      error: (error) => {
+        console.error(error);
+      }
+    });
+  }
+
   getGenres(): void {
     this.theMovieDBService.getMovieGenres().subscribe({
       next: (response) => {
@@ -74,9 +104,29 @@ export class HomeComponent implements OnInit {
   }
 
   onPageChange(event: PageEvent): void {
-    this.currentPage.set(event.pageIndex + 1);
+    const page = event.pageIndex + 1;
     this.pageSize.set(event.pageSize);
-    this.getPopularMovies(event.pageIndex + 1);
+
+    if (this.searchQuery()) {
+      this.theMovieDBService
+        .searchMovies(this.searchQuery(), page)
+        .subscribe({
+          next: (response) => {
+            this.popularMovies.set(response.results);
+            this.totalMovies.set(response.total_results);
+
+          },
+
+          error: (error) => {
+            console.error(error);
+          }
+        });
+
+    } else {
+
+      this.getPopularMovies(page);
+
+    }
   }
 
   getGenreNames(genreIds: number[]): string[] {

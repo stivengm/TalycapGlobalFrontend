@@ -47,10 +47,28 @@
     }
     .section_popular_movies {
         display: flex;
-        flex-wrap: wrap;
-        gap: 30px;
-        // justify-content: center;
+        flex-direction: column;
         margin-bottom: 20px;
+        .search_movies {
+            display: flex;
+            // align-items: center;
+            background-color: var(--background-card-movie);
+            border-radius: 20px;
+            padding: 20px 20px 0 20px;
+            margin-bottom: 30px;
+            gap: 20px;
+            mat-form-field {
+                flex: 1;
+            }
+            button {
+                margin-top: 8px;
+            }
+        }
+        .list_movies {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
     }
 }
 
