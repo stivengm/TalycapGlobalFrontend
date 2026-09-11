@@ -1,8 +1,30 @@
 <div class="section_home">
     @if (weatherInformation(); as weather) {
         <div class="section_weather">
-            <h1 class="title_weather">Clima de {{ weather.name }}</h1>
-        
+            <div class="section_title_search">
+                <h1 class="title_weather">Clima de {{ weather.name }}</h1>
+    
+                <div class="search_weather">
+                    <mat-form-field appearance="outline">
+                        <mat-label>Buscar ciudad</mat-label>
+    
+                        <input
+                            matInput
+                            [formControl]="weatherSearchControl"
+                            placeholder="Ej: Bogotá"
+                            (keyup.enter)="searchWeather()"
+                        />
+                    </mat-form-field>
+                    <button
+                        mat-flat-button
+                        color="primary"
+                        type="button"
+                        (click)="searchWeather()"
+                    >
+                        Buscar
+                    </button>
+                </div>
+            </div>
         
             <div class="information_weather">
                 <div class="information_with_icon">

@@ -7,8 +7,17 @@
         background-color: var(--background-card-movie);
         border-radius: 20px;
         padding: 10px;
-        .title_weather {
-            color: var(--whiteColor);
+        .section_title_search {
+            display: flex;
+            justify-content: space-between;
+            .title_weather {
+                color: var(--whiteColor);
+            }
+            .search_weather {
+                button {
+                    margin-left: 20px;
+                }
+            }
         }
         .information_weather {
             display: flex;

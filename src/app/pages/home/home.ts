@@ -10,6 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { DatePipe } from '@angular/common';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -19,7 +20,8 @@ import { DatePipe } from '@angular/common';
     MatButtonModule,
     MatChipsModule,
     MatPaginatorModule,
-    DatePipe
+    DatePipe,
+    ReactiveFormsModule
   ],
   templateUrl: './home.html',
   styleUrl: './home.scss',
@@ -30,6 +32,7 @@ export class HomeComponent implements OnInit {
   popularMovies = signal<MovieModel[]>([]);
   genres = signal<GenreModel[]>([]);
   searchQuery = signal('');
+  weatherSearchControl = new FormControl('');
 
 
   currentPage = signal(1);
@@ -47,16 +50,31 @@ export class HomeComponent implements OnInit {
     this.getGenres();
   }
 
-  getWeather() {
-    const city = "Bogota";
-    this.openWeather.getWeather(city).subscribe({
+  getWeather(city: string = 'Bogota'): void {
+    const searchCity = city.trim();
+
+    if (!searchCity) {
+      return;
+    }
+
+    this.openWeather.getWeather(searchCity).subscribe({
       next: (response) => {
         this.weatherInformation.set(response);
       },
       error: (error) => {
-        console.error(error);
+        console.error('Error obteniendo clima:', error);
       }
-    })
+    });
+  }
+
+  searchWeather(): void {
+    const city = this.weatherSearchControl.value?.trim() ?? '';
+
+    if (!city) {
+      return;
+    }
+
+    this.getWeather(city);
   }
 
   getPopularMovies(page: number = 1) {
