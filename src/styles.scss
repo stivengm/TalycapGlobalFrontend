@@ -1,1 +1,65 @@
 /* You can add global styles to this file, and also import other style files */
+
+:root {
+    --background-app: #1f1e1e;
+    --background-card-movie: #161515;
+
+    // Colors
+    --whiteColor: #FFFFFF;
+    --redColor: #cc0000;
+}
+
+
+body {
+    background-color: var(--background-app);
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+
+
+.item_movie {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    border-radius: 20px;
+    background-color: var(--background-card-movie);
+    transition: all 150ms;
+    cursor: pointer;
+    .img_movie {
+        border-radius: 20px 20px 0 0;
+    }
+    .favorite {
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        width: 20px;
+        height: 20px;
+        border-radius: 100%;
+        padding: 5px;
+        background-color: var(--whiteColor);
+        transition: all 150ms;
+        svg {
+            stroke: var(--redColor);
+        }
+        &:hover {
+            scale: 1.2;
+        }
+    }
+    .info_movie {
+        padding: 0 20px;
+        .title_movie {
+            color: var(--whiteColor);
+        }
+        .description_movie {
+            color: var(--whiteColor);
+        }
+    }
+    &:hover {
+        scale: 1.035;
+    }
+}

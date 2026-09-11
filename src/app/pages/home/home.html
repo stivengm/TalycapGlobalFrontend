@@ -1,0 +1,58 @@
+@if (weatherInformation(); as weather) {
+    <div class="section_weather">
+        <h1 class="title_weather">Clima de {{ weather.name }}</h1>
+    
+    
+        <div class="information_weather">
+            <div class="information_with_icon">
+                <img
+                    class=""
+                    [src]="'https://openweathermap.org/img/wn/' + weather.weather[0].icon + '@2x.png'"
+                    [alt]="weather.weather[0].icon"
+                />
+                <h2 class="description">{{ formatterDescriptionWeather(weather.weather[0].description) }}</h2>
+            </div>
+            <div class="more_information_weather">
+                <div class="item_weather">
+                    <p class="title">Temperatura</p>
+                    <h2 class="description">{{ weather.main.temp }} °C</h2>
+                </div>
+                <div class="item_weather">
+                    <p class="title">Sensación térmica</p>
+                    <h2 class="description">{{ weather.main.feels_like }} °C</h2>
+                </div>
+                <div class="item_weather">
+                    <p class="title">Humedad</p>
+                    <h2 class="description">{{ weather.main.humidity }}%</h2>
+                </div>
+                <div class="item_weather">
+                    <p class="title">Viento</p>
+                    <h2 class="description">{{ weather.wind.speed }} m/s</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+
+<h1 class="title_popular_movies">Películas polulares</h1>
+<div class="section_popular_movies">
+    @for (movie of popularMovies(); track movie.id) {
+        <div class="item_movie">
+            <img
+                class="img_movie"
+                [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+                [alt]="movie.title"
+            />
+            <div class="favorite">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z" />
+                </svg>
+            </div>
+            <div class="info_movie">
+                <h2 class="title_movie">{{ movie.title }}</h2>
+                <p class="description_movie">{{ movie.overview }}</p>
+            </div>
+        </div>
+    }
+</div>
