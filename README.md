@@ -15,7 +15,7 @@ npm i
 ng serve
 ```
 
-Una vez finalice se habilita podrá acceder directamente a la url `http://localhost:4200/` para que se pueda revisar, en caso contrario se puede acceder directamente a esta url donde se encuentra desplegado el sitio `http://localhost:4200/`
+Una vez finalice se habilita podrá acceder directamente a la url `http://localhost:4200/` para que se pueda revisar, en caso contrario se puede acceder directamente a esta url donde se encuentra desplegado el sitio `https://stivengm.github.io/TalycapGlobalFrontend/`
 
 ## Arquitectura del proyecto
 La arquitectura del proyecto es básica manteniendo la División de responsabilidades.
